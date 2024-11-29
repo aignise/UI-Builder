@@ -25,17 +25,35 @@ const SettingsPanel = ({ boxes, addBox, deleteBox, updateBox }) => {
             type="primary"
             onClick={(e) => {
               e.stopPropagation();
-              addBox(box.id); // Add child box
+              addBox(box.id); // Add a child
             }}
           >
             Add Child
           </Button>
           <Button
             size="small"
+            onClick={(e) => {
+              e.stopPropagation();
+              addBox(box.id, 'column'); // Add column sibling
+            }}
+          >
+            Add Column Sibling
+          </Button>
+          <Button
+            size="small"
+            onClick={(e) => {
+              e.stopPropagation();
+              addBox(box.id, 'row'); // Add row sibling
+            }}
+          >
+            Add Row Sibling
+          </Button>
+          <Button
+            size="small"
             danger
             onClick={(e) => {
               e.stopPropagation();
-              deleteBox(box.id); // Delete current box
+              deleteBox(box.id); // Delete this box
             }}
           >
             Delete
@@ -52,7 +70,6 @@ const SettingsPanel = ({ boxes, addBox, deleteBox, updateBox }) => {
             value={box.justify}
             onChange={(value) => updateBox(box.id, 'justify', value)}
             style={{ maxWidth: '100%' }}
-            getPopupContainer={(trigger) => trigger.parentNode}
           />
         </div>
 
@@ -64,7 +81,6 @@ const SettingsPanel = ({ boxes, addBox, deleteBox, updateBox }) => {
             value={box.align}
             onChange={(value) => updateBox(box.id, 'align', value)}
             style={{ maxWidth: '100%' }}
-            getPopupContainer={(trigger) => trigger.parentNode}
           />
         </div>
 
@@ -106,10 +122,10 @@ const SettingsPanel = ({ boxes, addBox, deleteBox, updateBox }) => {
     <div>
       <Button
         type="primary"
-        onClick={() => addBox(null)}
+        onClick={() => addBox(null)} // Add a root-level box
         style={{ marginBottom: '16px', width: '100%' }}
       >
-        Add Flex Box
+        Add Root Flex Box
       </Button>
       <Collapse accordion>
         {boxes.length > 0 ? (
